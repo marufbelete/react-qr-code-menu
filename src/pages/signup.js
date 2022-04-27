@@ -74,8 +74,6 @@ return(
     <LoginContainer>
         <Title>Welcom To Our Menu Page</Title>
         <Title>Sign-up</Title>
-        <Row>
-        </Row>
         <InputContainer>
         <InputFiled 
         onBlur={HandleNameState}

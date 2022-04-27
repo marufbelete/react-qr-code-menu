@@ -1,5 +1,5 @@
 
-import { InputFiled,LoginContainer,InputContainer, MainLog, ButtonContainer, Row, Title, Signup } from "../styled/form.styled"
+import { InputFiled,LoginContainer,InputContainer, MainLog, ButtonContainer, Row, Title, Signup, ErroMessage } from "../styled/form.styled"
 import useInputValidation from "../hooks/use-inputValidation"
 import {Link,useHistory,useLocation,useRouteMatch} from 'react-router-dom'
 import { useSelector,useDispatch } from "react-redux";
@@ -9,12 +9,14 @@ import { loginUser } from "../store/authhttp";
 import {useCookies} from 'react-cookie';
 export default function Login(){
     const [cookies,setCookie,removeCookie]=useCookies(['token']);
-    console.log(cookies)
+    const authState=useSelector(state=>state.login.isAuthenticated)
+    console.log(authState)
     // const reduxState=useSelector(state=>state.key);//for multiple reducer slice
     const dispatch=useDispatch()
     const state=useSelector(state=>state.login)
+    const errormsg=useSelector(state=>state.login.errMessage)
+console.log(errormsg)
     const history=useHistory();
-  
     let isInitial=false
     useEffect(()=>{
         if(isInitial)
@@ -26,11 +28,12 @@ export default function Login(){
         {
         dispatch(loginActions.login({IsSubmited:false}))
         dispatch(loginUser(state.user))
-        }
         if(state.isAuthenticated)
         {
             history.push('/menu')
         }
+        }
+        
         },[state])
 
 const {HandleInputState:HandleEmailState,
@@ -70,6 +73,7 @@ return(
              Facebook
         </ButtonContainer>
         </Row>
+        {!authState&&<ErroMessage>{errormsg}</ErroMessage>}
         <InputContainer>
         <InputFiled 
         onBlur={HandleEmailState}

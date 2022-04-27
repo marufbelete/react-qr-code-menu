@@ -13,6 +13,7 @@ export const registerUser=(data)=>{
        catch(err)
        {
            console.log(err)
+           console.log(err.response)
         dispatch(signupActions.status("error"))
 
        }
@@ -29,7 +30,10 @@ export const loginUser=(data)=>{
         }
        catch(err)
        {
-     console.log(err)
+     
+     dispatch(loginActions.isLoged(err.response.data.status))
+     dispatch(loginActions.Message(err.response.data.message))
+     console.log(err.response.data.message)
        }
 
     }

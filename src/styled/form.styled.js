@@ -32,6 +32,7 @@ margin-bottom:10px ;
 `
 export const Row=styled.div`
 display:flex ;
+margin-bottom:15px ;
 @media(max-width:590px)
   {
     flex-direction :column ;
@@ -111,7 +112,12 @@ export const ButtonContainer=styled.div`
   {
     font-size:20px ;
   }
-
+`
+export const ErroMessage=styled.div`
+font-size:16px ;
+color:red ;
+position:absolute ;
+top:275px;
 `
 export const InputFiled=styled.input`
 width:100%;
