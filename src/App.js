@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import {Route,Switch,Redirect} from 'react-router-dom'
+import Login from './pages/login'
+import SignUp from './pages/signup';
+import PageNotFound from './pages/notfoundpage';
+import Menu from './pages/menu';
+import {useSelector} from 'react-redux'
+import {useCookies} from 'react-cookie';
+
 
 function App() {
+  const [cookies,setCookie,removeCookie]=useCookies(['token']);
+  // const authState=useSelector(state=>state.login.isAuthenticated)
+  // console.log(authState)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Switch>
+    <Route exact path="/">
+      <Redirect to="/menu"></Redirect>
+    </Route>
+    {/* <Route exact path="/menu"><Menu/></Route> */}
+    <Route exact path="/login"><Login/></Route>
+    <Route exact path="/menu"> {!cookies.token?<Redirect to="/login"></Redirect>:<Menu/>}</Route>
+    <Route exact path="/signup"><SignUp/></Route>
+    <Route path="*">
+      <PageNotFound/>
+    </Route>
+    </Switch>
+    </>
   );
 }
 
